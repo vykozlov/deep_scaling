@@ -22,8 +22,8 @@ SleepLogTime="20s"
 
 ##### USAGEMESSAGE #####
 USAGEMESSAGE="Usage: $0 <options> ; where <options> are: \n
-		   --num_jobs=number	      \t \t The amount of deployments to submit \n
-              --submit_cmd            \t \t Script used to submit a single job \n
+	      --num_jobs=number       \t \t The amount of deployments to submit \n
+              --submit_cmd=command    \t \t Script used to submit a single job \n
               --search_string=string  \t String to search within curl response \n"
 
 ##### PARSE SCRIPT FLAGS #####
