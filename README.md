@@ -11,8 +11,8 @@ Has following parameters:
 
 --num_jobs=number       The amount of deployments to submit
 
---submit_cmd            Script used to submit a single job
+--submit_cmd=command    Script used to submit a single job
 
 --search_string=string  String to search within curl response
 
-* lete_orchent.sh       :   to delete either all deployments at once or one-by-one
+* delete_orchent.sh       :   to delete either all deployments at once or one-by-one
