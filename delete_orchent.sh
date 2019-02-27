@@ -1,7 +1,7 @@
 #!/bin/bash
 ####
 # Simple bash script to check all user deployments
-# and delete them
+# and delete them, if necessary
 # vkozlov @19-Feb-2019
 ###
 
@@ -11,7 +11,7 @@ DeploymentList=($(echo "$OrchentOutput" |grep Deployment |\
 CreationTime=($(echo "$OrchentOutput" |grep "creation time" | cut -d ':' -f2,3))
 
 echo "Found ${#DeploymentList[@]} deployments"
-echo -n "Do you want to delete all your deployments? "
+echo -n "Do you want to delete all your deployments? (y/n) "
 read REPLY
 echo "" # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]; then
@@ -22,7 +22,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     done
 fi
 
-echo -n "Do you want to delete them one-by-one? "
+echo -n "Do you want to delete them one-by-one? (y/n) "
 read REPLY
 echo "" # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]; then
@@ -31,7 +31,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     do
         echo "Deployment $dep"
         echo "Created: ${CreationTime[counter]}"
-        echo -n "Delete? "
+        echo -n "Delete? (y/n) "
         read REPLY
         if [[ $REPLY =~ ^[Yy]$ ]]; then
            orchent depdel $dep

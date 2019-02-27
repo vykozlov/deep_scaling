@@ -1,23 +1,30 @@
 #!/usr/bin/env bash
 ####
 # Simple bash script to submit deployments,
-# check there status
-# record a simple log
+# check their status, record a simple log
 # and delete them, if necessary
-# vkozlov @19-Feb-2019
+#
+# Arguments (optional):
+#  --num_jobs=number       The amount of deployments to submit
+#  --submit_cmd            Script used to submit a single job
+#  --search_string=string  String to search within curl response
+#
+# vkozlov @27-Feb-2019
 ###
 
-CurlSearchString="valentin.kozlov@kit.edu"
 NumJobs=20
+submit_cmd=./submit_orchent.sh
+CurlSearchString="Author\":"
 
 SleepSubmitTime="3s"
 SleepLogTime="20s"
-submit_cmd=./sub_orchent.sh
 
 
 ##### USAGEMESSAGE #####
 USAGEMESSAGE="Usage: $0 <options> ; where <options> are: \n
-		   --num_jobs=number	    \t \t The amount of deployments to submit \n"
+		   --num_jobs=number	      \t \t The amount of deployments to submit \n
+              --submit_cmd            \t \t Script used to submit a single job \n
+              --search_string=string  \t String to search within curl response \n"
 
 ##### PARSE SCRIPT FLAGS #####
 arr=("$@")
@@ -29,8 +36,12 @@ elif [ $1 == "-h" ] || [ $1 == "--help" ]; then
     shopt -s xpg_echo
     echo $USAGEMESSAGE
     exit 1
-elif [ $# -eq 1 ]; then
-    [[ $1 = *"--num_jobs"* ]] && NumJobs=${1#*=}
+elif [ $# -ge 1 ] && [ $# -le 3 ]; then
+    for i in "${arr[@]}"; do
+        [[ $i = *"--num_jobs"* ]] && NumJobs=${i#*=}
+        [[ $i = *"--submit_cmd"* ]] && submit_cmd=${i#*=}
+        [[ $i = *"--search_string"* ]] && CurlSearchString=${i#*=}
+    done
 else
     # Too many arguments were given (>1)
     echo "ERROR! Too many arguments provided!"
@@ -140,7 +151,8 @@ else
 fi
 
 # You may immediately delete all deployments
-echo -n "Do you want to delete them all? "
+# either all at the same time ...
+echo -n "Do you want to delete them all? (y/n) "
 read REPLY
 echo "" # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]; then
@@ -153,7 +165,8 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     echo "$DateNow,[INFO] Triggered deletion of all deployments," >> $LogFile
 fi
 
-echo -n "Do you want to delete them one-by-one? "
+# ... or one-by-one
+echo -n "Do you want to delete them one-by-one? (y/n) "
 read REPLY
 echo "" # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]; then
@@ -162,7 +175,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     do
         echo "Deployment $dep"
         echo "Created: ${CreationTime[counter]}"
-        echo -n "Delete? "
+        echo -n "Delete? (y/n) "
         read REPLY
         if [[ $REPLY =~ ^[Yy]$ ]]; then
            orchent depdel $dep
