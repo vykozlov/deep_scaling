@@ -29,7 +29,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     counter=0
     for dep in ${DeploymentList[*]}
     do
-        echo "Deployment $dep"
+        echo "#${counter} Deployment $dep"
         echo "Created: ${CreationTime[counter]}"
         echo -n "Delete? (y/n) "
         read REPLY
