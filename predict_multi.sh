@@ -93,7 +93,7 @@ do
          -H "accept: application/json" -H  "Content-Type: multipart/form-data" \
          -F "data=@${TestDir}/${test_file};type=image/jpeg" > $log_file &
 
-    # waits for the upload of an image to finish, then goes to next call
+    # wait: waits for the upload of an image to finish, then goes to next call
     # without it first call is fine, others "Internal Server Error"
     wait 
 
