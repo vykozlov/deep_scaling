@@ -95,9 +95,14 @@ do
     sleep $SleepSubmitTime
 done
 
-# Wait until all deployments are in CREATE_COMPLETE
+
+Deployments=($(orchent depls -c me |grep Deployment |\
+             awk '{print $2}' | cut -d '[' -f2 | cut -d ']' -f1))
+
+NumDeployments=${#Deployments[@]}
 job_success=0
-while [ $job_success -lt $NumJobs ]
+# Wait until all deployments are in CREATE_COMPLETE
+while [ $job_success -lt $NumDeployments ]
 do
     DateNow=$(date +%y%m%d_%H%M%S)
     OrchentOutput=$(orchent depls -c me)
@@ -110,6 +115,10 @@ do
     job_success=${#StatusCOMPLETE[@]}
     echo "$DateNow ${#Deployments[@]} ${#StatusINPROGRESS[@]} $job_success "
     echo "$DateNow,${#Deployments[@]},${#StatusINPROGRESS[@]},$job_success," >> $LogFile
+
+    # in case we start deleting deployments 'externally', NumDeployments will change
+    # Take this into account by updating NumDeployments
+    NumDeployments=${#Deployments[@]}
 
     sleep $SleepLogTime
 done
