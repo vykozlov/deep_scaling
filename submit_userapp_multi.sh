@@ -35,7 +35,7 @@ USAGEMESSAGE="Usage: $0 <options> ; where <options> are: \n
 arr=("$@")
 if [ $# -eq 0 ]; then 
 # use default config (0)
-    break 
+    echo "Using default values ..." 
 elif [ $1 == "-h" ] || [ $1 == "--help" ]; then 
 # print usagemessage
     shopt -s xpg_echo

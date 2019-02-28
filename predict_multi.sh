@@ -33,7 +33,7 @@ USAGEMESSAGE="Usage: $0 <options> ; where <options> are: \n
 arr=("$@")
 if [ $# -eq 0 ]; then 
 # use default config (0)
-    break 
+    echo "Using default values ..."
 elif [ $1 == "-h" ] || [ $1 == "--help" ]; then 
 # print usagemessage
     shopt -s xpg_echo
@@ -87,11 +87,11 @@ do
          -H 'accept: application/json' -H  'Content-Type: multipart/form-data' \
          -F 'data=@${test_file};type=image/jpeg'" > $log_file
 
-    echo "" > $log_file
+    echo "" >> $log_file
 
     curl -X POST "${RemoteURL}/models/${Model}/predict" \
          -H "accept: application/json" -H  "Content-Type: multipart/form-data" \
-         -F "data=@${TestDir}/${test_file};type=image/jpeg" > $log_file &
+         -F "data=@${TestDir}/${test_file};type=image/jpeg" >> $log_file &
 
     # wait: waits for the upload of an image to finish, then goes to next call
     # without it first call is fine, others "Internal Server Error"
