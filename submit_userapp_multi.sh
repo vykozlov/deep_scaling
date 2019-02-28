@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+#
+# Copyright (c) 2017 - 2019 Karlsruhe Institute of Technology - Steinbuch Centre for Computing
+# This code is distributed under the MIT License
+# Please, see the LICENSE file
+#
 ####
 # Simple bash script to submit deployments,
 # check their status, record a simple log
@@ -22,7 +27,7 @@ SleepLogTime="20s"
 
 ##### USAGEMESSAGE #####
 USAGEMESSAGE="Usage: $0 <options> ; where <options> are: \n
-	      --num_jobs=number       \t \t The amount of deployments to submit \n
+	         --num_jobs=number       \t \t The amount of deployments to submit \n
               --submit_cmd=command    \t \t Script used to submit a single job \n
               --search_string=string  \t String to search within curl response \n"
 
