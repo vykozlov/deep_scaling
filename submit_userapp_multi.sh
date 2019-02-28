@@ -136,7 +136,8 @@ do
        let curl_success=curl_success+1
     fi
 
-    echo "$DateNow,$dep,$CurlResponse" >> $LogFile
+    CreationTime=${CreationTime[icounter]}
+    echo "$DateNow,$dep,$CreationTime,$WebLink,$CurlResponse" >> $LogFile
     echo "" >> $LogFile 
 done
 

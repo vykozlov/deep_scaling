@@ -70,7 +70,7 @@ do
     fi
 
     CreationTime=${CreationTime[icounter]}
-    echo "$DateNow,$dep,$CreationTime,$CurlResponse" >> $LogFile
+    echo "$DateNow,$dep,$CreationTime,$WebLink,$CurlResponse" >> $LogFile
     echo "" >> $LogFile 
     let icounter=icounter+1
 done
